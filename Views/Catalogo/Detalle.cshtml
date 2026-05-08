@@ -1,11 +1,202 @@
-﻿@model Catalogo.Models.Item
+@model Catalogo.Models.Item
 
-<h1>@Model.Titulo</h1>
+@{
+    ViewData["Title"] = Model.Titulo;
+}
 
-<p><strong>Género:</strong> @Model.Genero</p>
-<p><strong>Consola:</strong> @Model.Consola</p>
-<p><strong>Año:</strong> @Model.Ano</p>
-<p><strong>Descripción:</strong> @Model.Descripcion</p>
+<style>
+    .detail-page {
+        max-width: 760px;
+        margin: 0 auto;
+    }
 
-<hr />
-<a asp-action="Index">&larr; Volver al Catálogo</a>
+    /* Breadcrumb */
+    .breadcrumb-gc {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 1.8rem;
+    }
+    .breadcrumb-gc a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumb-gc a:hover { color: var(--cyan); }
+    .breadcrumb-gc .sep { color: var(--border-strong); }
+    .breadcrumb-gc .current { color: var(--cyan); font-weight: 700; }
+
+    /* Hero band */
+    .detail-hero {
+        background: linear-gradient(135deg, rgba(0,212,232,0.07) 0%, rgba(0,80,100,0.12) 100%);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    .detail-hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+    }
+    .detail-thumb {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        border-bottom: 1px solid var(--border);
+        background: rgba(0,0,0,0.15);
+    }
+    .detail-title-band {
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+    .detail-title {
+        font-size: clamp(1.4rem, 4vw, 2.2rem);
+        font-weight: 900;
+        color: var(--text-primary);
+        line-height: 1.15;
+    }
+    .detail-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    /* Info grid */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .info-cell {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.1rem 1.2rem;
+        transition: border-color 0.2s;
+    }
+    .info-cell:hover { border-color: var(--border-strong); }
+    .info-cell-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        margin-bottom: 0.35rem;
+    }
+    .info-cell-value {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--text-primary);
+    }
+
+    /* Description card */
+    .desc-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+    .desc-card-title {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        margin-bottom: 0.8rem;
+    }
+    .desc-text {
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.75;
+    }
+
+    /* Actions */
+    .detail-actions {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .back-link {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--cyan); }
+</style>
+
+<div class="detail-page">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-gc">
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <span class="sep">›</span>
+        <a asp-action="Index">Catálogo</a>
+        <span class="sep">›</span>
+        <span class="current">@Model.Titulo</span>
+    </nav>
+
+    <!-- Hero -->
+    <div class="detail-hero">
+        <div class="detail-thumb">🎮</div>
+        <div class="detail-title-band">
+            <h1 class="detail-title">@Model.Titulo</h1>
+            <div class="detail-badges">
+                <span class="gc-badge">@Model.Genero</span>
+                <span class="gc-badge">@Model.Ano</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+        <div class="info-cell">
+            <div class="info-cell-label">Género</div>
+            <div class="info-cell-value">@Model.Genero</div>
+        </div>
+        <div class="info-cell">
+            <div class="info-cell-label">Consola</div>
+            <div class="info-cell-value">@Model.Consola</div>
+        </div>
+        <div class="info-cell">
+            <div class="info-cell-label">Año</div>
+            <div class="info-cell-value">@Model.Ano</div>
+        </div>
+        <div class="info-cell">
+            <div class="info-cell-label">Rating</div>
+            <div class="info-cell-value" style="color:var(--cyan)">★★★★★</div>
+        </div>
+    </div>
+
+    <!-- Description -->
+    @if (!string.IsNullOrWhiteSpace(Model.Descripcion))
+    {
+        <div class="desc-card">
+            <div class="desc-card-title">Descripción</div>
+            <p class="desc-text">@Model.Descripcion</p>
+        </div>
+    }
+
+    <!-- Actions -->
+    <div class="gc-divider"></div>
+    <div class="detail-actions">
+        <a class="btn-gc btn-gc-outline" asp-action="Index">← Volver al Catálogo</a>
+        <a class="btn-gc btn-gc-primary" asp-action="Agregar">+ Agregar otro juego</a>
+    </div>
+</div>

@@ -1,30 +1,149 @@
-﻿@model Catalogo.Models.Item
+@model Catalogo.Models.Item
 
-<h1>Agregar videojuego</h1>
+@{
+    ViewData["Title"] = "Agregar Videojuego";
+}
 
-<form asp-action="Agregar" method="post">
-    <div>
-        <label>Título</label>
-        <input asp-for="Titulo" />
-    </div>
-    <div>
-        <label>Género</label>
-        <input asp-for="Genero" />
-    </div>
-    <div>
-        <label>Consola</label>
-        <input asp-for="Consola" />
-    </div>
-    <div>
-        <label>Año</label>
-        <input asp-for="Ano" type="number" />
-    </div>
-    <div>
-        <label>Descripción</label>
-        <textarea asp-for="Descripcion"></textarea>
-    </div>
-    <button type="submit">Guardar</button>
-</form>
+<style>
+    .form-page {
+        max-width: 680px;
+        margin: 0 auto;
+    }
 
-<hr />
-<a asp-action="Index">&larr; Cancelar</a>
+    .form-card {
+        background: rgba(0, 212, 232, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 2.5rem;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+    }
+    .form-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal), var(--cyan));
+    }
+
+    .form-group {
+        margin-bottom: 1.4rem;
+    }
+
+    .form-row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    @@media (max-width: 520px) {
+        .form-row-2 { grid-template-columns: 1fr; }
+        .form-card { padding: 1.6rem; }
+    }
+
+    .gc-textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .back-link {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--cyan); }
+
+    /* Breadcrumb */
+    .breadcrumb-gc {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 1.8rem;
+    }
+    .breadcrumb-gc a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumb-gc a:hover { color: var(--cyan); }
+    .breadcrumb-gc .sep { color: var(--border-strong); }
+    .breadcrumb-gc .current { color: var(--cyan); font-weight: 700; }
+</style>
+
+<div class="form-page">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-gc">
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <span class="sep">›</span>
+        <a asp-action="Index">Catálogo</a>
+        <span class="sep">›</span>
+        <span class="current">Agregar Videojuego</span>
+    </nav>
+
+    <!-- Heading -->
+    <div style="margin-bottom:2rem;">
+        <p class="gc-section-tag">Nuevo Título</p>
+        <h1 class="gc-heading">Agregar <span>Videojuego</span></h1>
+    </div>
+
+    <!-- Form card -->
+    <div class="form-card">
+        <form asp-action="Agregar" method="post">
+            <div class="form-group">
+                <label class="gc-label" asp-for="Titulo">Título del Juego</label>
+                <input class="gc-input" asp-for="Titulo" placeholder="ej. The Legend of Zelda: Breath of the Wild" />
+                <span asp-validation-for="Titulo" class="text-danger" style="font-size:0.78rem;"></span>
+            </div>
+
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label class="gc-label" asp-for="Genero">Género</label>
+                    <input class="gc-input" asp-for="Genero" placeholder="ej. Aventura, RPG, FPS…" />
+                    <span asp-validation-for="Genero" class="text-danger" style="font-size:0.78rem;"></span>
+                </div>
+                <div class="form-group">
+                    <label class="gc-label" asp-for="Consola">Consola / Plataforma</label>
+                    <input class="gc-input" asp-for="Consola" placeholder="ej. Nintendo Switch, PC…" />
+                    <span asp-validation-for="Consola" class="text-danger" style="font-size:0.78rem;"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="gc-label" asp-for="Ano">Año de Lanzamiento</label>
+                <input class="gc-input" asp-for="Ano" type="number" placeholder="ej. 2024" style="max-width:200px;" />
+                <span asp-validation-for="Ano" class="text-danger" style="font-size:0.78rem;"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="gc-label" asp-for="Descripcion">Descripción</label>
+                <textarea class="gc-input gc-textarea" asp-for="Descripcion" placeholder="Escribe una breve descripción del juego…"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger" style="font-size:0.78rem;"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-gc btn-gc-primary" style="font-size:0.88rem;padding:0.65rem 1.8rem;">
+                    💾 Guardar Juego
+                </button>
+                <a class="back-link" asp-action="Index">← Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

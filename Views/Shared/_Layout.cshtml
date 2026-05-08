@@ -1,50 +1,364 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Catalogo</title>
+    <title>@ViewData["Title"] - GameCatalog</title>
     <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Catalogo.styles.css" asp-append-version="true" />
+    <style>
+        /* ─── CSS Variables ─── */
+        :root {
+            --bg-primary:    #050e1a;
+            --bg-secondary:  #071524;
+            --bg-card:       rgba(0, 180, 200, 0.05);
+            --cyan:          #00d4e8;
+            --cyan-dim:      #00a8be;
+            --cyan-glow:     rgba(0, 212, 232, 0.25);
+            --cyan-glow-sm:  rgba(0, 212, 232, 0.12);
+            --teal:          #00e5c8;
+            --text-primary:  #e8f4f8;
+            --text-muted:    #7ab0c0;
+            --border:        rgba(0, 212, 232, 0.18);
+            --border-strong: rgba(0, 212, 232, 0.45);
+            --font:          'Open Sans', sans-serif;
+        }
+
+        /* ─── Reset & Base ─── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            min-height: 100%;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 15px;
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        /* Animated background mesh */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,180,200,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,100,140,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 10% 60%, rgba(0,200,180,0.08) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body > * { position: relative; z-index: 1; }
+
+        /* ─── Scrollbar ─── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 3px; }
+
+        /* ─── Navbar ─── */
+        .gc-navbar {
+            background: rgba(5, 14, 26, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.85rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .gc-brand {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+        .gc-brand::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--cyan);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--cyan);
+            transform: rotate(45deg);
+        }
+        .gc-brand:hover { color: var(--teal); }
+
+        .gc-nav-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+        }
+        .gc-nav-links a {
+            display: block;
+            padding: 0.4rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            border-radius: 6px;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .gc-nav-links a:hover {
+            color: var(--cyan);
+            background: var(--cyan-glow-sm);
+        }
+        .gc-nav-links a.active {
+            color: var(--cyan);
+            background: var(--cyan-glow-sm);
+        }
+
+        .gc-nav-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        /* ─── Buttons ─── */
+        .btn-gc {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-family: var(--font);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-gc-primary {
+            background: var(--cyan);
+            color: #040d18;
+            box-shadow: 0 0 18px var(--cyan-glow);
+        }
+        .btn-gc-primary:hover {
+            background: var(--teal);
+            box-shadow: 0 0 28px rgba(0,229,200,0.45);
+            color: #040d18;
+            transform: translateY(-1px);
+        }
+        .btn-gc-outline {
+            background: transparent;
+            color: var(--cyan);
+            border: 1.5px solid var(--border-strong);
+        }
+        .btn-gc-outline:hover {
+            background: var(--cyan-glow-sm);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* ─── Main content ─── */
+        .gc-main {
+            min-height: calc(100vh - 140px);
+            padding: 2.5rem 1.5rem;
+        }
+        .gc-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ─── Footer ─── */
+        .gc-footer {
+            border-top: 1px solid var(--border);
+            padding: 1.2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .gc-footer a { color: var(--cyan-dim); text-decoration: none; }
+        .gc-footer a:hover { color: var(--cyan); }
+        .gc-footer-dot { color: var(--cyan); }
+
+        /* ─── Section heading ─── */
+        .gc-section-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+        }
+        .gc-heading {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+        .gc-heading span { color: var(--cyan); }
+
+        /* ─── Card ─── */
+        .gc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+        }
+        .gc-card:hover {
+            border-color: var(--border-strong);
+            box-shadow: 0 4px 32px var(--cyan-glow-sm), 0 0 0 1px var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* ─── Form elements ─── */
+        .gc-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+        .gc-input, .gc-textarea {
+            width: 100%;
+            background: rgba(0, 212, 232, 0.04);
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 0.65rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font);
+            font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .gc-input:focus, .gc-textarea:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px var(--cyan-glow-sm);
+        }
+        .gc-input::placeholder, .gc-textarea::placeholder { color: rgba(122,176,192,0.5); }
+
+        /* ─── Divider ─── */
+        .gc-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+            margin: 2rem 0;
+        }
+
+        /* ─── Ticker strip ─── */
+        .gc-ticker {
+            background: rgba(0, 212, 232, 0.06);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .gc-ticker-inner {
+            display: inline-block;
+            animation: ticker 22s linear infinite;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--cyan-dim);
+        }
+        @@keyframes ticker {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ─── Glow pulse ─── */
+        .gc-glow-dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 8px var(--cyan);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @@keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--cyan); }
+            50%       { opacity: 0.5; box-shadow: 0 0 3px var(--cyan); }
+        }
+
+        /* ─── Badge / pill ─── */
+        .gc-badge {
+            display: inline-block;
+            padding: 0.2rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            background: var(--cyan-glow-sm);
+            border: 1px solid var(--border);
+            color: var(--cyan);
+        }
+
+        /* ─── Override Bootstrap leftover ─── */
+        .container { max-width: 100% !important; padding: 0 !important; }
+        a { color: var(--cyan); }
+        a:hover { color: var(--teal); }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Catalogo</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Catalogo" asp-action="Index">Catálogo</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <!-- ── Navbar ── -->
+    <nav class="gc-navbar">
+        <a class="gc-brand" asp-area="" asp-controller="Home" asp-action="Index">GameCatalog</a>
+
+        <ul class="gc-nav-links">
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li><a asp-area="" asp-controller="Catalogo" asp-action="Index">Catálogo</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a></li>
+        </ul>
+
+        <div class="gc-nav-actions">
+            <a class="btn-gc btn-gc-outline" asp-area="" asp-controller="Catalogo" asp-action="Index">Explorar</a>
+            <a class="btn-gc btn-gc-primary" asp-area="" asp-controller="Catalogo" asp-action="Agregar">+ Agregar</a>
+        </div>
+    </nav>
+
+    <!-- ── Ticker ── -->
+    <div class="gc-ticker">
+        <span class="gc-ticker-inner">
+            &nbsp;⬥ CATÁLOGO DE VIDEOJUEGOS &nbsp;⬥ NUEVOS JUEGOS DISPONIBLES &nbsp;⬥ EXPLORA EL UNIVERSO GAMING &nbsp;⬥ AGREGA TUS FAVORITOS &nbsp;⬥ CATÁLOGO DE VIDEOJUEGOS &nbsp;⬥ NUEVOS JUEGOS DISPONIBLES &nbsp;⬥ EXPLORA EL UNIVERSO GAMING &nbsp;⬥ AGREGA TUS FAVORITOS &nbsp;
+        </span>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Catalogo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- ── Main ── -->
+    <div class="gc-main">
+        <div class="gc-container">
+            @RenderBody()
         </div>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="gc-footer">
+        <span class="gc-glow-dot"></span>
+        <span>&copy; 2026 <strong>GameCatalog</strong></span>
+        <span class="gc-footer-dot">·</span>
+        <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

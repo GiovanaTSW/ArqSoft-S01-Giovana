@@ -1,8 +1,234 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">CatalogoApp</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">¡Bienvenidos al mejor catálogo que recopila los mejores videojuegos!</a>.</p>
+<style>
+    /* ── Hero ── */
+    .hero {
+        text-align: center;
+        padding: 5rem 1rem 4rem;
+        position: relative;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(0,212,232,0.12) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .hero-now-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        margin-bottom: 1.25rem;
+    }
+    .hero-title {
+        font-size: clamp(2.4rem, 7vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+    }
+    .hero-title .hl { color: var(--cyan); }
+    .hero-subtitle {
+        max-width: 540px;
+        margin: 0 auto 2.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+    .hero-cta {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* ── Glow line ── */
+    .glow-line {
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, var(--cyan) 30%, var(--teal) 70%, transparent 100%);
+        margin: 3.5rem 0;
+        opacity: 0.45;
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin-bottom: 3.5rem;
+    }
+    .stat-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.4rem 1.2rem;
+        text-align: center;
+        transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .stat-card:hover {
+        border-color: var(--cyan);
+        box-shadow: 0 0 20px var(--cyan-glow-sm);
+    }
+    .stat-num {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--cyan);
+        line-height: 1;
+        margin-bottom: 0.3rem;
+    }
+    .stat-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+
+    /* ── Feature grid ── */
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+    .feature-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.6rem;
+        transition: all 0.25s;
+    }
+    .feature-card:hover {
+        border-color: var(--border-strong);
+        box-shadow: 0 4px 30px var(--cyan-glow-sm);
+        transform: translateY(-3px);
+    }
+    .feature-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+        display: block;
+    }
+    .feature-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.4rem;
+    }
+    .feature-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    /* ── CTA band ── */
+    .cta-band {
+        background: linear-gradient(135deg, rgba(0,212,232,0.08) 0%, rgba(0,140,160,0.04) 100%);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
+        text-align: center;
+    }
+    .cta-band h2 {
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        font-weight: 800;
+        margin-bottom: 0.8rem;
+    }
+    .cta-band p {
+        color: var(--text-muted);
+        max-width: 400px;
+        margin: 0 auto 1.5rem;
+        font-size: 0.88rem;
+    }
+</style>
+
+<!-- ── Hero ── -->
+<section class="hero">
+    <div class="hero-now-live">
+        <span class="gc-glow-dot"></span>
+        NOW LIVE
+    </div>
+    <h1 class="hero-title">
+        El Mejor<br><span class="hl">Catálogo</span><br>de Videojuegos
+    </h1>
+    <p class="hero-subtitle">
+        Descubre, organiza y explora tu universo gaming favorito. Recopila los mejores títulos en un solo lugar.
+    </p>
+    <div class="hero-cta">
+        <a class="btn-gc btn-gc-primary" asp-area="" asp-controller="Catalogo" asp-action="Index">
+            Explorar Catálogo
+        </a>
+        <a class="btn-gc btn-gc-outline" asp-area="" asp-controller="Catalogo" asp-action="Agregar">
+            + Agregar Juego
+        </a>
+    </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ── Stats ── -->
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Géneros</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">★★★★★</div>
+        <div class="stat-label">Calidad</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Disponible</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Gaming</div>
+    </div>
+</div>
+
+<!-- ── Features ── -->
+<div style="margin-bottom:1.5rem;">
+    <p class="gc-section-tag">¿Qué puedes hacer?</p>
+    <h2 class="gc-heading">Gestiona tu <span>colección</span></h2>
+</div>
+<div class="feature-grid">
+    <div class="feature-card">
+        <span class="feature-icon">🎮</span>
+        <div class="feature-title">Explorar Juegos</div>
+        <div class="feature-desc">Navega por tu colección completa con filtros por género y consola.</div>
+    </div>
+    <div class="feature-card">
+        <span class="feature-icon">➕</span>
+        <div class="feature-title">Agregar Títulos</div>
+        <div class="feature-desc">Añade nuevos videojuegos con toda la información que necesitas.</div>
+    </div>
+    <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <div class="feature-title">Ver Detalles</div>
+        <div class="feature-desc">Consulta descripción, consola, año y género de cada título.</div>
+    </div>
+    <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title">Filtros Rápidos</div>
+        <div class="feature-desc">Filtra por género para encontrar exactamente lo que buscas.</div>
+    </div>
+</div>
+
+<div class="gc-divider"></div>
+
+<!-- ── CTA ── -->
+<div class="cta-band">
+    <h2>¿Listo para explorar? <span style="color:var(--cyan)">→</span></h2>
+    <p>Accede al catálogo completo y descubre todos los videojuegos disponibles.</p>
+    <a class="btn-gc btn-gc-primary" asp-area="" asp-controller="Catalogo" asp-action="Index">
+        Ir al Catálogo
+    </a>
 </div>

@@ -1,7 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Política de privacidad";
+@{
+    ViewData["Title"] = "Política de Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
-<h2></h2>
-<p></p>
-<p></p>
+<style>
+    .privacy-page { max-width: 700px; margin: 0 auto; }
+    .privacy-page h2 { font-size: 1.05rem; font-weight: 800; color: var(--cyan); margin: 1.6rem 0 0.5rem; }
+    .privacy-page p  { color: var(--text-muted); font-size: 0.9rem; line-height: 1.75; }
+</style>
+<div class="privacy-page">
+    <p class="gc-section-tag">Legal</p>
+    <h1 class="gc-heading" style="margin-bottom:2rem;">Política de <span>Privacidad</span></h1>
+    <div class="gc-card">
+        <h2>Información que recopilamos</h2>
+        <p>GameCatalog almacena únicamente la información de los videojuegos que tú mismo ingresas: título, género, consola, año y descripción. No recopilamos datos personales.</p>
+        <h2>Uso de la información</h2>
+        <p>Los datos ingresados se utilizan exclusivamente para mostrar tu catálogo de videojuegos personal dentro de la aplicación.</p>
+        <h2>Cookies</h2>
+        <p>Esta aplicación puede utilizar cookies de sesión necesarias para su correcto funcionamiento. No utilizamos cookies de seguimiento ni publicidad.</p>
+        <h2>Contacto</h2>
+        <p>Si tienes alguna pregunta sobre esta política, puedes contactarnos a través de la aplicación.</p>
+    </div>
+    <div class="gc-divider"></div>
+    <a class="btn-gc btn-gc-outline" asp-controller="Home" asp-action="Index">← Volver al inicio</a>
+</div>

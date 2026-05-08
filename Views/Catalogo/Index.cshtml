@@ -1,29 +1,221 @@
-﻿@model List<Catalogo.Models.Item>
+@model List<Catalogo.Models.Item>
 
-<h1>Mi Catálogo</h1>
+@{
+    ViewData["Title"] = "Mi Catálogo";
+}
 
-<!-- Filtro por género -->
-<div>
-    <a asp-action="Index">Todos</a>
+<style>
+    /* ── Page header ── */
+    .cat-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    .filter-btn {
+        display: inline-block;
+        padding: 0.38rem 1rem;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        border: 1.5px solid var(--border);
+        color: var(--text-muted);
+        background: transparent;
+        transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        color: var(--cyan);
+        border-color: var(--cyan);
+        background: var(--cyan-glow-sm);
+        box-shadow: 0 0 12px var(--cyan-glow-sm);
+    }
+
+    /* ── Grid ── */
+    .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.1rem;
+    }
+
+    /* ── Game card ── */
+    .game-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: all 0.28s;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    .game-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        opacity: 0;
+        transition: opacity 0.25s;
+    }
+    .game-card:hover {
+        border-color: var(--border-strong);
+        box-shadow: 0 8px 40px var(--cyan-glow-sm), 0 2px 10px rgba(0,0,0,0.4);
+        transform: translateY(-4px);
+    }
+    .game-card:hover::before { opacity: 1; }
+
+    .card-thumb {
+        height: 90px;
+        background: linear-gradient(135deg, rgba(0,212,232,0.08) 0%, rgba(0,100,140,0.15) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .card-body {
+        padding: 1.1rem 1.2rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .card-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.25;
+    }
+    .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.2rem;
+    }
+    .card-genre {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--cyan);
+        text-transform: uppercase;
+    }
+    .card-sep { color: var(--border-strong); font-size: 0.7rem; }
+    .card-year {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+
+    .card-footer-row {
+        margin-top: auto;
+        padding-top: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .card-console {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+    .card-arrow {
+        color: var(--cyan-dim);
+        font-size: 0.85rem;
+        transition: transform 0.2s;
+    }
+    .game-card:hover .card-arrow { transform: translateX(4px); color: var(--cyan); }
+
+    /* ── Empty state ── */
+    .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        color: var(--text-muted);
+    }
+    .empty-state .icon { font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.5; }
+    .empty-state h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .empty-state p { font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+    /* ── Count ── */
+    .count-tag {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+    .count-tag span { color: var(--cyan); font-weight: 800; }
+</style>
+
+<!-- ── Header ── -->
+<div class="cat-header">
+    <div>
+        <p class="gc-section-tag">Biblioteca</p>
+        <h1 class="gc-heading">Mi <span>Catálogo</span></h1>
+    </div>
+    <div style="display:flex; align-items:center; gap:1rem;">
+        <span class="count-tag">Total: <span>@Model.Count</span> juegos</span>
+        <a class="btn-gc btn-gc-primary" asp-action="Agregar">+ Agregar</a>
+    </div>
+</div>
+
+<!-- ── Filter bar ── -->
+<div class="filter-bar">
+    <a class="filter-btn @(ViewBag.GeneroActual == null ? "active" : "")"
+       asp-action="Index">Todos</a>
     @foreach (var gen in ViewBag.Generos as List<string>)
     {
-        <span> | </span>
-        <a asp-action="Index" asp-route-genero="@gen">@gen</a>
+        <a class="filter-btn @(ViewBag.GeneroActual == gen ? "active" : "")"
+           asp-action="Index" asp-route-genero="@gen">@gen</a>
     }
 </div>
 
-<hr />
+<div class="gc-divider" style="margin-top:0;"></div>
 
-<!-- Lista de items -->
-<ul>
-@foreach (var item in Model)
+<!-- ── Games grid ── -->
+@if (Model.Count == 0)
 {
-    <li>
-        <a asp-action="Detalle" asp-route-id="@item.Id">@item.Titulo</a>
-        -- @item.Genero (@item.Ano)
-    </li>
+    <div class="empty-state">
+        <div class="icon">🎮</div>
+        <h3>No hay juegos aquí todavía</h3>
+        <p>Agrega tu primer videojuego al catálogo.</p>
+        <a class="btn-gc btn-gc-primary" asp-action="Agregar">+ Agregar Videojuego</a>
+    </div>
 }
-</ul>
-
-<hr />
-<a asp-action="Agregar">+ Agregar Videojuego</a>
+else
+{
+    <div class="games-grid">
+        @foreach (var item in Model)
+        {
+            <a class="game-card" asp-action="Detalle" asp-route-id="@item.Id">
+                <div class="card-thumb">🎮</div>
+                <div class="card-body">
+                    <div class="card-title">@item.Titulo</div>
+                    <div class="card-meta">
+                        <span class="card-genre">@item.Genero</span>
+                        <span class="card-sep">·</span>
+                        <span class="card-year">@item.Ano</span>
+                    </div>
+                    <div class="card-footer-row">
+                        <span class="card-console">@item.Consola</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+}
