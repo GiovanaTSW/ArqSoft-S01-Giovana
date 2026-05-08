@@ -154,7 +154,32 @@
 
     <!-- Hero -->
     <div class="detail-hero">
-        <div class="detail-thumb">🎮</div>
+        <div class="detail-thumb">
+            @{
+                var imagenesJuegos = new Dictionary<string, string>
+                {
+                    { "Devil May Cry",                      "/Images/Devil_May_Cry.jpg" },
+                    { "Castlevania: Symphony of the Night", "/Images/Castlevania.jpg" },
+                    { "Animal Crossing New Horizons",       "/Images/Animal_Crossing_New_Horizons.jpg" },
+                    { "Poppy Playtime Triple Pack",         "/Images/Poppy_Playtime_Triple_Pack.jpg" },
+                    { "Minecraft",                          "/Images/Minecraft.jpg" },
+                    { "Super Mario Maker 2",                "/Images/Super_Mario_Maker_2.jpg" },
+                    { "Luigi'S Mansion 3",                  "/Images/LuigiS_Mansion_3.jpg" },
+                    { "Grand Theft Auto V",                 "/Images/GTA_V.jpg" },
+                    { "Kirby and The Forgotten Land",       "/Images/Kirby_And_The_Forgotten_Land.jpg" }
+                };
+            }
+            @if (imagenesJuegos.ContainsKey(Model.Titulo))
+            {
+                <img src="@Url.Content(imagenesJuegos[Model.Titulo])" alt="@Model.Titulo"
+                    style="width:100%; height:100%; object-fit:cover" />
+            }
+            else
+            {
+                <span>🎮</span>
+            }
+            
+        </div>
         <div class="detail-title-band">
             <h1 class="detail-title">@Model.Titulo</h1>
             <div class="detail-badges">
