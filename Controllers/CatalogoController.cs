@@ -50,10 +50,20 @@ namespace Catalogo.Controllers
             {
                 Id = 5,
                 Titulo = "Minecraft",
-                Genero = "Multiplataforma",
+                Genero = "Sandbox",
                 Ano = 2011,
-                Consola = "Sandbox",
+                Consola = "Multiplataforma",
                 Descripcion = "Un mundo de bloques infinitos para construir, explorar y sobrevivir solo o con amigos."
+            },
+
+            new Item
+            {
+                Id = 6,
+                Titulo = "Super Mario Maker 2",
+                Genero = "Plataformas",
+                Ano = 2019,
+                Consola = "Nintendo Switch",
+                Descripcion = "Herramienta creativa para diseñar tus propios niveles de Mario y jugar los creados por la comunidad.",
             }
         };
 
