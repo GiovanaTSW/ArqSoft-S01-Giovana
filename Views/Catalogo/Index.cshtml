@@ -2,6 +2,19 @@
 
 @{
     ViewData["Title"] = "Mi Catálogo";
+
+    var imagenesJuegos = new Dictionary<string, string>
+    {
+        { "Devil May Cry",                      "/Images/Devil_May_Cry.jpg" },
+        { "Castlevania: Symphony of the Night", "/Images/Castlevania.jpg" },
+        { "Animal Crossing New Horizons",       "/Images/Animal_Crossing_New_Horizons.jpg" },
+        { "Poppy Playtime Triple Pack",         "/Images/Poppy_Playtime_Triple_Pack.jpg" },
+        { "Minecraft",                          "/Images/Minecraft.jpg" },
+        { "Super Mario Maker 2",                "/Images/Super_Mario_Maker_2.jpg" },
+        { "Luigi'S Mansion 3",                  "/Images/LuigiS_Mansion_3.jpg" },
+        { "Grand Theft Auto V",                 "/Images/GTA_V.jpg" },
+        { "Kirby and The Forgotten Land",       "/Images/Kirby_And_The_Forgotten_Land.jpg" }
+    };
 }
 
 <style>
@@ -78,13 +91,19 @@
     .game-card:hover::before { opacity: 1; }
 
     .card-thumb {
-        height: 90px;
+        height: 160px;
         background: linear-gradient(135deg, rgba(0,212,232,0.08) 0%, rgba(0,100,140,0.15) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 2.5rem;
         border-bottom: 1px solid var(--border);
+        overflow: hidden;
+    }
+    .card-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .card-body {
@@ -202,7 +221,16 @@ else
         @foreach (var item in Model)
         {
             <a class="game-card" asp-action="Detalle" asp-route-id="@item.Id">
-                <div class="card-thumb">🎮</div>
+                <div class="card-thumb">
+                    @if (imagenesJuegos.ContainsKey(item.Titulo))
+                    {
+                        <img src="@Url.Content(imagenesJuegos[item.Titulo])" alt="@item.Titulo" />
+                    }
+                    else
+                    {
+                        <span>🎮</span>
+                    }
+                </div>
                 <div class="card-body">
                     <div class="card-title">@item.Titulo</div>
                     <div class="card-meta">

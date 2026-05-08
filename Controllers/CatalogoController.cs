@@ -84,6 +84,16 @@ namespace Catalogo.Controllers
                 Ano = 2013,
                 Consola = "PC, PS, Xbox",
                 Descripcion = "Tres criminales cruzan sus vidas en misiones épicas dentro de la gigantesca ciudad de Los Santos."
+            },
+
+            new Item
+            {
+                Id =9,
+                Titulo = "Kirby and The Forgotten Land",
+                Genero = "Acción",
+                Ano = 2022,
+                Consola = "Nintendo Switch",
+                Descripcion = "Kirby llega a un misterioso mundo postapocalíptico donde la naturaleza ha reclamado las ruinas de una antigua civilización. Su misión es explorar estos escenarios para rescatar a los Waddle Dees secuestrados.\r\n\r\nDestaca por ser el primer juego de la saga principal totalmente en 3D y por introducir el Modo Transmórfico, una mecánica que permite a Kirby intentar tragarse objetos gigantes (como un coche o una máquina expendedora) para tomar su forma, resolver acertijos y superar los niveles."
             }
 
         };
