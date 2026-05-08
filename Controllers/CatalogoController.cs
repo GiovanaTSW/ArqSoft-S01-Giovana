@@ -26,7 +26,7 @@ namespace Catalogo.Controllers
                 Descripcion = "Videojuego que trata de un cazador..."
             },
 
-            new Item 
+            new Item
             {
                 Id = 3,
                 Titulo = "Animal Crossing New Horizons",
@@ -74,7 +74,18 @@ namespace Catalogo.Controllers
                 Ano = 2019,
                 Consola = "Nintendo Switch",
                 Descripcion = "Luigi explora un hotel encantado para rescatar a sus amigos usando su aspiradora especial para fantasmas."
+            },
+
+            new Item
+            {
+                Id = 8,
+                Titulo = "Grand Theft Auto V",
+                Genero = "Acción",
+                Ano = 2013,
+                Consola = "PC, PS, Xbox",
+                Descripcion = "Tres criminales cruzan sus vidas en misiones épicas dentro de la gigantesca ciudad de Los Santos."
             }
+
         };
 
         //Lista - con filtro opcional por género
