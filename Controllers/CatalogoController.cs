@@ -24,6 +24,35 @@ namespace Catalogo.Controllers
                 Ano = 1997,
                 Consola = "PlayStation 2",
                 Descripcion = "Videojuego que trata de un cazador..."
+            },
+
+            new Item 
+            {
+                Id = 3,
+                Titulo = "Animal Crossing New Horizons",
+                Genero = "Simulación Social",
+                Ano = 2020,
+                Consola = "Nintendo Switch",
+                Descripcion = "Escápate a una isla desierta donde puedes decorar, pescar y convivir con vecinos animales en tiempo real."
+            },
+
+            new Item
+            {
+                Id = 4,
+                Titulo = "Poppy Playtime Triple Pack",
+                Genero = "Horror / Puzles",
+                Ano = 2025,
+                Consola = "PS5, Xbox, Switch",
+                Descripcion = "Recopilación de los tres capítulos donde debes sobrevivir a juguetes asesinos en una fábrica abandonada."
+            },
+
+            new Item
+            {
+                Id = 5,
+                Titulo = "Minecraft",
+                Ano = 2011,
+                Consola = "Sandbox",
+                Descripcion = "Un mundo de bloques infinitos para construir, explorar y sobrevivir solo o con amigos."
             }
         };
 
