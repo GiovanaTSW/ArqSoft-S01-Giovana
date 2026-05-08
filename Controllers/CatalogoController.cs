@@ -64,6 +64,16 @@ namespace Catalogo.Controllers
                 Ano = 2019,
                 Consola = "Nintendo Switch",
                 Descripcion = "Herramienta creativa para diseñar tus propios niveles de Mario y jugar los creados por la comunidad.",
+            },
+
+            new Item
+            {
+                Id = 7,
+                Titulo = "Luigi'S Mansion 3",
+                Genero = "Acción",
+                Ano = 2019,
+                Consola = "Nintendo Switch",
+                Descripcion = "Luigi explora un hotel encantado para rescatar a sus amigos usando su aspiradora especial para fantasmas."
             }
         };
 
