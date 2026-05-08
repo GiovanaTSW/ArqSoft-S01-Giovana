@@ -50,6 +50,7 @@ namespace Catalogo.Controllers
             {
                 Id = 5,
                 Titulo = "Minecraft",
+                Genero = "Multiplataforma",
                 Ano = 2011,
                 Consola = "Sandbox",
                 Descripcion = "Un mundo de bloques infinitos para construir, explorar y sobrevivir solo o con amigos."
