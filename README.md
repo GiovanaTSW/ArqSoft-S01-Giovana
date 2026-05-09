@@ -6,19 +6,19 @@ GameVault es una aplicación web realizada con la finalidad de gestionar y explo
 ## Capturas de pantalla
  
 ### Página de inicio
-![Home](screenshots/home.png)
+![Home](Screenshots/home.png)
  
 ### Catálogo completo
-![Catálogo](screenshots/catalogo.png)
+![Catálogo](Screenshots/catalogo.png)
  
 ### Detalle de juego
-![Detalle](screenshots/detalle.png)
+![Detalle](Screenshots/detalle.png)
  
 ### Formulario de agregar
-![Agregar](screenshots/agregar.png)
+![Agregar](Screenshots/agregar.png)
  
 ### Política de privacidad
-![Privacidad](screenshots/privacidad.png)
+![Privacidad](Screenshots/privacidad.png)
  
 ---
  
