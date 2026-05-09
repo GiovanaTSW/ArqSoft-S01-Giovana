@@ -33,7 +33,7 @@ GameVault es una aplicación web realizada con la finalidad de gestionar y explo
 | **Bootstrap** | Librería CSS para componentes base |
 | **JavaScript** | Interactividad en el cliente |
 | **Open Sans** | Tipografía principal vía Google Fonts |
-| **Visual Studio 2022** | IDE de desarrollo |
+| **Visual Studio Community** | IDE de desarrollo |
  
 ---
  
@@ -45,7 +45,8 @@ GameVault/
 │   ├── HomeController.cs
 │   └── CatalogoController.cs
 ├── Models/
-│   └── Item.cs
+│   ├── Item.cs
+│   └── ErrorViewModel.cs
 ├── Views/
 │   ├── Home/
 │   │   ├── Index.cshtml
@@ -55,53 +56,72 @@ GameVault/
 │   │   ├── Agregar.cshtml
 │   │   └── Detalle.cshtml
 │   └── Shared/
-│       └── _Layout.cshtml
-└── wwwroot/
-    └── Images/
-        ├── GTA_V.jpg
-        ├── Minecraft.jpg
-        └── ...
+│       ├── _Layout.cshtml
+│       ├── Error.cshtml
+│       └── _ValidationScriptsPartial.cshtml
+├── wwwroot/
+│   ├── Images/
+│   │   ├── Animal_Crossing_New_Horizons.jpg
+│   │   ├── Castlevania.jpg
+│   │   ├── Devil_May_Cry.jpg
+│   │   ├── GTA_V.jpg
+│   │   ├── Kirby_And_The_Forgotten_Land.jpg
+│   │   ├── LuigiS_Mansion_3.jpg
+│   │   ├── Minecraft.jpg
+│   │   ├── Poppy_Playtime_Triple_Pack.jpg
+│   │   └── Super_Mario_Maker_2.jpg
+│   ├── css/
+│   │   └── site.css
+│   ├── js/
+│   │   └── site.js
+│   └── lib/
+├── Program.cs
+├── appsettings.json
+└── Catalogo.csproj
+` ``
 ```
  
 ---
  
-## Funcionalidades
+## Funcionalidades del proyecto
  
 - Listado de videojuegos en tarjetas con imagen
 - Filtro por género
 - Vista de detalle por juego
 - Formulario para agregar nuevos títulos
-- Diseño gaming oscuro con paleta teal/cyan
-- Ticker animado y navbar sticky
 ---
  
 ## Cómo ejecutar el proyecto
  
 1. Clona o descarga el repositorio
-2. Abre el archivo `.sln` en **Visual Studio 2022**
+2. Abre el archivo `.sln` en **Visual Studio Community**
 3. Presiona `Ctrl + F5` para compilar y ejecutar
 4. El navegador abrirá automáticamente en `https://localhost:XXXX`
 ---
  
 ## Declaración de uso de IA
- 
-Este proyecto utilizó **Claude (Anthropic)** como herramienta de apoyo durante el desarrollo. La inteligencia artificial fue empleada para:
+Nombre del estudiante: Giovana Ruby Díaz Anduze
+
+IA utilizada: Claude Sonnet 4.6
+
+Fecha de uso: 2026-05-08
+
+Propósito: Diseño de la interfaz visual de la página y para corregir errores de compilación
+Yo, Giovana Ruby Díaz Anduze declaro que para el desarrollo de este proyecto utilicé: **Claude (Anthropic) Sonnet 4.6** como herramienta de apoyo y fue empleada para:
  
 - Diseño y personalización del estilo visual de las vistas `.cshtml`
 - Corrección de errores de compilación en Razor (escape de `@@keyframes`, `@@media`)
-- Implementación del diccionario de imágenes por título de juego
-- Generación de este archivo `README.md`
-El uso de IA fue complementario al aprendizaje propio; la lógica del controlador, el modelo de datos y la estructura MVC fueron desarrollados de forma independiente como parte de la asignatura.
+- Ayuda en los errores de compilación de imagen 
+
+La fecha de uso fue el 8 de mayo de 2026. El uso de IA fue un complemento al desarrollo propio; la lógica del controlador, el modelo de datos y la estructura MVC fueron desarrollados de forma independiente como parte de la asignatura.
  
 ---
  
 ## Datos académicos
- 
-| Campo | Detalle |
-|---|---|
-| **Institución** | Tecnológico de Software |
-| **Asignatura** | Arquitectura de Software |
-| **Profesor** | Jorge Javier Pedrozo Romero |
-| **Estudiante** | Giovana Ruby Díaz Anduze |
-| **Grupo** | 3A |
-| **Año** | 2026 |
+
+**Institución**: Tecnológico de Software
+**Asignatura**: Arquitectura de Software
+**Profesor**: Jorge Javier Pedrozo Romero
+**Estudiante**: Giovana Ruby Díaz Anduze
+**Grupo**: 3A
+**Fecha de entrega**: 8 de mayo de 2026
